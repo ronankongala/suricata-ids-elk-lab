@@ -58,37 +58,37 @@ All rules are in `/etc/suricata/rules/custom.rules`.
 ## Screenshots
 
 ### 1. EC2 Instance Running
-![EC2 Instance Running](screenshots/01_ec2_instance_running.png.png)
+![EC2 Instance Running](screenshots/01_ec2_instance_running.png)
 
 ### 2. ELK Containers Running
-![ELK Containers](screenshots/02_elk_containers_running.png.png)
+![ELK Containers](screenshots/02_elk_containers_running.png)
 
 ### 3. Filebeat Running
-![Filebeat Running](screenshots/03_filebeat_running.png.png)
+![Filebeat Running](screenshots/03_filebeat_running.png)
 
 ### 4. Suricata Running
-![Suricata Running](screenshots/04_suricata_running.png.png)
+![Suricata Running](screenshots/04_suricata_running.png)
 
 ### 5. Suricata Alerts Detected
-![Suricata Alerts](screenshots/05_suricata_alerts_detected.png.png)
+![Suricata Alerts](screenshots/06_suricata_alerts_detected.png)
 
 ### 6. Kibana Home
-![Kibana Home](screenshots/06_kibana_home.png.png)
+![Kibana Home](screenshots/05_kibana_dashboard.png)
 
 ### 7. Kibana Discover - Suricata Events
-![Kibana Discover](screenshots/07_kibana_discover_suricata.png.png)
+![Kibana Discover](screenshots/07_kibana_discover_suricata.png)
 
 ### 8. Kibana Event Types Pie Chart
-![Event Types Pie](screenshots/08_kibana_event_types_pie.png.png)
+![Event Types Pie](screenshots/08_kibana_event_types_pie.png)
 
 ### 9. Kibana Alert Signatures Bar Chart
-![Alert Signatures](screenshots/09_kibana_alert_signatures_bar.png.png)
+![Alert Signatures](screenshots/09_kibana_alert_signatures_bar.png)
 
 ### 10. Suricata IDS Dashboard
-![IDS Dashboard](screenshots/10_kibana_dashboard.png.png)
+![IDS Dashboard](screenshots/10_kibana_dashboard.png)
 
 ### 11. Dashboard View Mode
-![Dashboard View](screenshots/11_kibana_dashboard_view.png.png)
+![Dashboard View](screenshots/11_kibana_dashboard_view.png)
 
 ---
 
