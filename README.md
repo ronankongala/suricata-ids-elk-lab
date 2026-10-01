@@ -1,6 +1,6 @@
 # Suricata IDS + ELK Stack on AWS EC2
 
-A network intrusion detection lab deployed on AWS EC2 running Suricata 7.0.3 IDS with custom detection rules, integrated with an ELK stack (Elasticsearch + Kibana) via Docker for real-time log ingestion and threat visualization.
+A network intrusion detection lab on a single AWS EC2 instance. Suricata 7.0.3 watches the instance's interface with three custom rules, and its eve.json log goes into Elasticsearch and Kibana running in Docker.
 
 ---
 
@@ -43,7 +43,7 @@ AWS EC2 (Ubuntu 24.04, t3.medium)
 
 ## Custom Detection Rules
 
-Three custom Suricata rules written for this lab:
+I wrote three custom rules for this lab:
 
 | Rule | Signature | SID |
 |---|---|---|
@@ -57,38 +57,38 @@ All rules are in `/etc/suricata/rules/custom.rules`.
 
 ## Screenshots
 
-### 1. EC2 Instance Running
 ![EC2 Instance Running](screenshots/01_ec2_instance_running.png)
+*The t3.medium EC2 instance running.*
 
-### 2. ELK Containers Running
 ![ELK Containers](screenshots/02_elk_containers_running.png)
+*Elasticsearch and Kibana containers up.*
 
-### 3. Filebeat Running
 ![Filebeat Running](screenshots/03_filebeat_running.png)
+*Filebeat service running.*
 
-### 4. Suricata Running
 ![Suricata Running](screenshots/04_suricata_running.png)
+*Suricata service running on ens5.*
 
-### 5. Suricata Alerts Detected
 ![Suricata Alerts](screenshots/06_suricata_alerts_detected.png)
+*Alerts pulled from eve.json: SSH Connection Attempt and ICMP Ping Detected.*
 
-### 6. Kibana Home
 ![Kibana Home](screenshots/05_kibana_dashboard.png)
+*Kibana home page.*
 
-### 7. Kibana Discover - Suricata Events
 ![Kibana Discover](screenshots/07_kibana_discover_suricata.png)
+*Kibana Discover on the suricata-logs index, showing 110 hits.*
 
-### 8. Kibana Event Types Pie Chart
 ![Event Types Pie](screenshots/08_kibana_event_types_pie.png)
+*Pie chart of events by event_type.*
 
-### 9. Kibana Alert Signatures Bar Chart
 ![Alert Signatures](screenshots/09_kibana_alert_signatures_bar.png)
+*Bar chart of alerts by signature.*
 
-### 10. Suricata IDS Dashboard
 ![IDS Dashboard](screenshots/10_kibana_dashboard.png)
+*The Suricata IDS dashboard combining both charts.*
 
-### 11. Dashboard View Mode
 ![Dashboard View](screenshots/11_kibana_dashboard_view.png)
+*The same dashboard in view mode.*
 
 ---
 
@@ -107,6 +107,7 @@ All rules are in `/etc/suricata/rules/custom.rules`.
   - Port 22 (SSH)
   - Port 5601 (Kibana)
   - Port 9200 (Elasticsearch)
+  - Limit the source of all three to your own IP, since Elasticsearch takes unauthenticated requests in this setup (see Step 6)
 
 ### Step 2: Install Dependencies
 ```bash
@@ -167,6 +168,8 @@ with open('/var/log/suricata/eve.json') as f:
 EOF
 ```
 
+The script stops after the first 100 lines of eve.json, so raise or remove the `i >= 100` limit to index more.
+
 ### Step 7: Build Kibana Dashboard
 1. Go to `http://<EC2-IP>:5601`
 2. Stack Management → Index Patterns → Create `suricata-logs`
@@ -178,20 +181,4 @@ EOF
 
 ## Results
 
-- Suricata 7.0.3 actively monitoring network interface `ens5`
-- 3 custom detection rules firing on ICMP, SSH, and HTTP traffic
-- 110+ Suricata events indexed in Elasticsearch
-- Kibana dashboard showing event type distribution and alert signatures
-- SSH Connection Attempt and ICMP Ping Detected alerts confirmed working
-
----
-
-## Skills Demonstrated
-
-- AWS EC2 deployment and security group configuration
-- Suricata IDS installation, configuration, and custom rule writing
-- ELK stack deployment via Docker Compose
-- Network log ingestion pipeline (Suricata → Filebeat → Elasticsearch)
-- Kibana dashboard creation and visualization
-- Linux system administration (Ubuntu 24.04)
-- Network intrusion detection concepts
+Suricata 7.0.3 monitored `ens5`, and Kibana Discover shows 110 events in the `suricata-logs` index. Two of the three custom rules fired: SSH Connection Attempt and ICMP Ping Detected each appear twice in the signature chart. The third alert in that chart is GPL WEB_SERVER 403 Forbidden, which comes from the stock ruleset. The custom HTTP rule (SID 1000003) doesn't show up in any of the screenshots. The dashboard combines the event type pie chart and the alert signature bar chart.
