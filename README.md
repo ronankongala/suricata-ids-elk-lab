@@ -67,7 +67,7 @@ All rules are in `/etc/suricata/rules/custom.rules`.
 *Filebeat service running.*
 
 ![Suricata Running](screenshots/04_suricata_running.png)
-*Suricata service running on ens5.*
+*Suricata 7.0.3 service active after adding custom.rules to the config.*
 
 ![Suricata Alerts](screenshots/06_suricata_alerts_detected.png)
 *Alerts pulled from eve.json: SSH Connection Attempt and ICMP Ping Detected.*
